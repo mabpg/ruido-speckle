@@ -3,6 +3,11 @@ package py.com.mabpg.ruidospeckle.main;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
 
+import java.awt.image.RenderedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
+
 import org.slf4j.LoggerFactory;
 
 import py.com.mabpg.ruidospeckle.utils.TestConfig;
@@ -22,8 +27,12 @@ public class Main {
         ImagePlus imgOriginalGray = new ImagePlus( config.PATH_ORIGINAL_IMAGE + originalNameGray );
         ImageProcessor imgGray = (ImageProcessor)imgOriginalGray.getProcessor();
         
+        ListaEnlazada listaElementosCambiar = new ListaEnlazada();
+        
         //COPIAMOS LA IMAGEN
+        //ImageIO.write((RenderedImage) imgGray, "jpg", new File("lol.jpg"));
         ImageProcessor imgCopiaGray = imgGray;
+    
         int medianaHallada = 0;
                 
         //System.out.println("PIXEEEL " + " " + imgGray + " " + imgOriginalGray + " height " + imgGray.getHeight() + " width " + imgGray.getWidth());
@@ -55,32 +64,71 @@ public class Main {
         		//ENVIAMOS LA PORCION DE LA IMAGEN PARA HALLAR LOS PESOS Y LA MEDIANA
         		medianaHallada = elem.hallandoPesos(porcionVentana);
         		
+        		
+        		
         		int filaCentro = i + (int) Math.ceil((config.TAMAÑO_VENTANA)/2);
         		int columnaCentro = j + (int) Math.ceil((config.TAMAÑO_VENTANA)/2);
         		
-        		imgCopiaGray.set(columnaCentro, filaCentro, medianaHallada);
-        		System.out.println("i= " + i +"j= " + j +" filaC " + filaCentro + " columnC " + columnaCentro + "imgCopia " + imgCopiaGray.get(filaCentro, columnaCentro) + " medianaH " + medianaHallada);
+        		listaElementosCambiar.insertarPrimero(medianaHallada, filaCentro, columnaCentro);
+        		
+        		//imgCopiaGray.set(columnaCentro, filaCentro, medianaHallada);
+        		//System.out.println("i= " + i +"j= " + j +" filaC " + filaCentro + " columnC " + columnaCentro + "imgCopia " + imgCopiaGray.get(filaCentro, columnaCentro) + " medianaH " + medianaHallada);
         		        		
-        		d = 0;
-        		for (int k = i; k < i+config.TAMAÑO_VENTANA; k++) {
-        			int e = 0;
-                	for (int l = j; l < j+config.TAMAÑO_VENTANA; l++) {
-                		matrizImagenParcialCopia[d][e] = imgCopiaGray.get(l, k);                		
-//                		if(k == filaCentro && l == columnaCentro ){
-//                			System.out.println("CENTRO l=" + l + " k=" + k + " matrizParcial" + matrizImagenParcialCopia[d][e]+" imgCopia"+ imgCopiaGray.getPixel(l, k));
-//                		}                		
-                		e++;
-                	}
-                	d++;
-        		}
-        		System.out.println();
-        		System.out.println(" COPIA ");
-        		printMatrizMain(matrizImagenParcialCopia);
+//        		d = 0;
+//        		for (int k = i; k < i+config.TAMAÑO_VENTANA; k++) {
+//        			int e = 0;
+//                	for (int l = j; l < j+config.TAMAÑO_VENTANA; l++) {
+//                		matrizImagenParcialCopia[d][e] = imgCopiaGray.get(l, k);                		
+//           		                		
+//                		e++;
+//                	}
+//                	d++;
+//        		}
+        		//System.out.println();
+        		//System.out.println(" COPIA ");
+        		//printMatrizMain(matrizImagenParcialCopia);
         		//break;
         		
         	}
         	break;
         }
+        System.out.println(" CANTIDAD DE ELEMENTOS " + listaElementosCambiar.cuantosElementos());
+        Nodo nodList = listaElementosCambiar.quitarPrimero();
+        while(nodList != null) { 
+        	imgGray.set(nodList.getValor().getMediana(), nodList.getValor().getUbicacion().getX(), nodList.getValor().getUbicacion().getY());
+        	
+        	System.out.print(" " + nodList.getValor().getMediana() + " x= " + nodList.getValor().getUbicacion().getX() + " y= " + nodList.getValor().getUbicacion().getY());
+        	nodList = listaElementosCambiar.quitarPrimero();
+        	System.out.println();
+        	
+        	if (nodList == null){
+        		System.out.println("null");
+        	}
+        }
+        
+        /********************** IMPRIMIMOS LA IMAGEN CON LOS CAMBIOS **********************************/
+        for (int i = 0; i < (imgGray.getHeight()-config.TAMAÑO_VENTANA+1); i++) {
+        	for (int j = 0; j < (imgGray.getWidth()-config.TAMAÑO_VENTANA+1); j++) {
+		        int d = 0;
+				for (int k = i; k < i+config.TAMAÑO_VENTANA; k++) {
+					int e = 0;
+		        	for (int l = j; l < j+config.TAMAÑO_VENTANA; l++) {
+		        		matrizImagenParcialCopia[d][e] = imgGray.get(l, k);                		
+		
+		        		e++;
+		        	}
+		        	d++;
+				}
+				System.out.println();
+				System.out.println(" COPIA ");
+        		printMatrizMain(matrizImagenParcialCopia);
+        		break;
+        	}
+        	break;
+        }
+		
+		/********************************************************/
+        
         
 //        int [][]matriz = {{144, 144, 145, 147, 148},
 //                          {151, 151, 152, 153, 154},
