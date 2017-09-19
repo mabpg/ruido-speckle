@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package py.com.mabpg.ruidospeckle.main;
 
 /**
  *
- * @author daasalbion
- * Clase que reprenta los pixeles dentro de la imagen
- * Util puesto que imagej los manejas de esta manera
+ * @author daasalbion Clase que reprenta los pixeles dentro de la imagen Util
+ * puesto que imagej los manejas de esta manera
  */
 public class Pixel {
 
@@ -41,5 +35,5 @@ public class Pixel {
     public String toString() {
         return "Pixel{" + "x=" + x + ", y=" + y + '}';
     }
-    
+
 }

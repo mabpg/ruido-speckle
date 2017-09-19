@@ -3,7 +3,7 @@
   <groupId>py.com.mabpg</groupId>
   <artifactId>ruido-speckle</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <name>Filtro mediana adaptativo</name>
   <description>Filtro mediana adaptativo con pesos para imagenes en escala de grises</description>
   <dependencies>
@@ -34,5 +34,18 @@
             <version>9.3-1100-jdbc41</version>
         </dependency>
     </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
   
 </project>
