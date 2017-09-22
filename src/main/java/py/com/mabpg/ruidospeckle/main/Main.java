@@ -1,8 +1,13 @@
 package py.com.mabpg.ruidospeckle.main;
 
+import py.com.mabpg.ruidospeckle.models.ListaEnlazada;
+import py.com.mabpg.ruidospeckle.models.Nodo;
+import py.com.mabpg.ruidospeckle.models.SpeckleFilterMedian;
 import ij.ImagePlus;
 import ij.process.ColorProcessor;
 import org.slf4j.LoggerFactory;
+import py.com.mabpg.ruidospeckle.models.RgbImage;
+import py.com.mabpg.ruidospeckle.utils.RgbImageJpaController;
 
 import py.com.mabpg.ruidospeckle.utils.TestConfig;
 
@@ -15,6 +20,8 @@ public class Main {
      */
     public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, Exception {
         TestConfig config = new TestConfig();
+        RgbImage image;
+        RgbImageJpaController rgbImageJpaController = new RgbImageJpaController();
 
         /****************************LEEMOS LA IMAGEN*************************/        
         String originalNameGray = "/imagenSpeckle." + config.EXTENSION;
@@ -23,21 +30,27 @@ public class Main {
 
         ImagePlus imgOriginal = new ImagePlus(config.PATH_ORIGINAL_IMAGE + originalNameGray);
         ColorProcessor colImgOriginal = (ColorProcessor) imgOriginal.getProcessor();
+        image = new RgbImage(colImgOriginal, config.EXTENSION);
+        
+        image.setNoiseName("probando");
+        image.setNoiseProbability(null);
+        image.setDescription((double)83);                    
+        rgbImageJpaController.create(image);
         /*******************************************************************/
                
 
-        ListaEnlazada listaElementosCambiar = new ListaEnlazada();
+        /*ListaEnlazada listaElementosCambiar = new ListaEnlazada();
         int medianaHallada = 0;
         //DIMENSION DE LA VENTANA
         int[][] porcionVentana = new int[5][5];
         //System.out.println("PIXEEEL " + " " + imgGray + " " + imgOriginalGray + " height " + imgGray.getHeight() + " width " + imgGray.getWidth());
-        int[][] matrizImagenParcialCopia = new int[5][5];
+        int[][] matrizImagenParcialCopia = new int[5][5];*/
         
         
         
         /*******RECORREMOS LA IMAGEN, QUITANDO LA PORCION DE LA VENTANA*******************/
         
-        for (int i = 0; i < (colImgOriginal.getHeight() - config.TAMAÑO_VENTANA + 1); i++) {
+       /* for (int i = 0; i < (colImgOriginal.getHeight() - config.TAMAÑO_VENTANA + 1); i++) {
             for (int j = 0; j < (colImgOriginal.getWidth() - config.TAMAÑO_VENTANA + 1); j++) {
                 int d = 0;
                 for (int k = i; k < i + config.TAMAÑO_VENTANA; k++) {
@@ -63,10 +76,10 @@ public class Main {
                 //break;
             }
             break;
-        }               
+        } */              
         /******************************************************************/
         
-        System.out.println(" CANTIDAD DE ELEMENTOS de la lista enlazada " + listaElementosCambiar.cuantosElementos());
+       /* System.out.println(" CANTIDAD DE ELEMENTOS de la lista enlazada " + listaElementosCambiar.cuantosElementos());
         Nodo nodList = listaElementosCambiar.quitarPrimero();
         while (nodList != null) {
             colImgOriginal.set(nodList.getValor().getUbicacion().getY(), nodList.getValor().getUbicacion().getX(), nodList.getValor().getMediana());
@@ -78,12 +91,12 @@ public class Main {
             if (nodList == null) {
                 System.out.println("ATENTI YA ES NULL");
             }
-        }
+        }*/
 
         /**
          * ******************** IMPRIMIMOS LA IMAGEN CON LOS CAMBIOS *********************************
          */
-        for (int i = 0; i < (colImgOriginal.getHeight() - config.TAMAÑO_VENTANA + 1); i++) {
+        /*for (int i = 0; i < (colImgOriginal.getHeight() - config.TAMAÑO_VENTANA + 1); i++) {
             for (int j = 0; j < (colImgOriginal.getWidth() - config.TAMAÑO_VENTANA + 1); j++) {
                 int d = 0;
                 for (int k = i; k < i + config.TAMAÑO_VENTANA; k++) {
@@ -100,7 +113,7 @@ public class Main {
                 //break;
             }
             break;
-        }
+        }*/
 
         /**
          * *****************************************************

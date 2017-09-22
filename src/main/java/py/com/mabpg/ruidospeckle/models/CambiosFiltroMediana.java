@@ -1,4 +1,6 @@
-package py.com.mabpg.ruidospeckle.main;
+package py.com.mabpg.ruidospeckle.models;
+
+import py.com.mabpg.ruidospeckle.models.Pixel;
 
 public class CambiosFiltroMediana {
 

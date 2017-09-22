@@ -1,4 +1,4 @@
-package py.com.mabpg.ruidospeckle.main;
+package py.com.mabpg.ruidospeckle.models;
 
 /**
  *

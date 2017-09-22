@@ -1,6 +1,7 @@
-package py.com.mabpg.ruidospeckle.main;
+package py.com.mabpg.ruidospeckle.models;
 
 import org.slf4j.LoggerFactory;
+import py.com.mabpg.ruidospeckle.main.Main;
 
 public class SpeckleFilterMedian {
 
