@@ -2,6 +2,7 @@ package py.com.mabpg.ruidospeckle.utils;
 
 import java.util.Arrays;
 import java.util.List;
+import py.com.mabpg.ruidospeckle.utils.TestConstants.Ruidos;
 
 /**
  *
@@ -11,14 +12,14 @@ public class TestConfig {
     
     public List<Integer> WINDOWSLIST = Arrays.asList(1, 5, 7);
     
-    //public Class[] RUIDOS = {
+    public Class[] RUIDOS = {
         //Ruidos.Gaussian.class
-        //Ruidos.Speckle.class
+        Ruidos.Speckle.class
         //Ruidos.Impulsive.class,
         //Ruidos.Poisson.class,
         //Ruidos.Salt.class,
         //Ruidos.Pepper.class
-    //};
+    };
     
     public double PROBABILIDAD_RUIDO_FROM = 0.105;
     public double PROBABILIDAD_RUDO_TO = 0.105;
