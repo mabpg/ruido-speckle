@@ -6,6 +6,8 @@ import ij.process.ColorProcessor;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.util.List;
+import javax.xml.bind.annotation.XmlTransient;
 
 import static py.com.mabpg.ruidospeckle.models.Constant.CATALOG;
 import static py.com.mabpg.ruidospeckle.models.Constant.CHANNEL_BLUE;
@@ -25,7 +27,7 @@ import static py.com.mabpg.ruidospeckle.models.Constant.SCHEMA;
     @NamedQuery(name = "RgbImage.findByIdRgbImage", query = "SELECT r FROM RgbImage r WHERE r.idRgbImage = :idRgbImage"),
     @NamedQuery(name = "RgbImage.findByWidth", query = "SELECT r FROM RgbImage r WHERE r.width = :width"),
     @NamedQuery(name = "RgbImage.findByHeight", query = "SELECT r FROM RgbImage r WHERE r.height = :height"),
-    //@NamedQuery(name = "RgbImage.getWindosList", query = "select w from RgbWindow w join RgbImage i where w.idRgbImage.idRgbImage = i.idRgbImage and i.idRgbImage = :idRgbImage and w.windowCount = :windowCount order by w.windowNumber"),
+    @NamedQuery(name = "RgbImage.getWindosList", query = "select w from RgbWindow w join RgbImage i where w.idRgbImage.idRgbImage = i.idRgbImage and i.idRgbImage = :idRgbImage and w.windowCount = :windowCount order by w.windowNumber"),
     @NamedQuery(name = "RgbImage.getImageTest", query = "select r from RgbImage r where r.noiseName = 'original' and r.description BETWEEN :minIndex AND :maxIndex order by r.description asc"),
     @NamedQuery(name = "RgbImage.getNoiseImageByNoise", query = "select r from RgbImage r where r.noiseName = :noiseName and r.description = :description order by r.description asc"),
     @NamedQuery(name = "RgbImage.getWindowListByImage", query = "select r from RgbImage r where r.noiseName = :noiseName and r.description = :description order by r.description asc"),
@@ -56,8 +58,8 @@ public class RgbImage implements Serializable {
     private RgbImageDataChannelGreen rgbImageDataChannelGreen;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idRgbImage", fetch = FetchType.LAZY)
     private RgbImageDataChannelRed rgbImageDataChannelRed;
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idRgbImage", fetch = FetchType.LAZY)
-    //private List<RgbWindow> windowList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRgbImage", fetch = FetchType.LAZY)
+    private List<RgbWindow> windowList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idRgbImage", fetch = FetchType.LAZY)
     private RgbImageDataChannelBlue rgbImageDataChannelBlue;
     @Column(name = "noise_name", length = 200)
@@ -79,8 +81,7 @@ public class RgbImage implements Serializable {
         this.height = colorProcessor.getHeight();
         this.extension = extension;
         setChannelData(colorProcessor);
-        setDataChannels();
-        
+        setDataChannels();        
     }
 
     public RgbImage(Integer idRgbImage) {
@@ -159,14 +160,14 @@ public class RgbImage implements Serializable {
         this.rgbImageDataChannelRed = rgbImageDataChannelRed;
     }
 
-    /*@XmlTransient
+    @XmlTransient
     public List<RgbWindow> getWindowList() {
         return windowList;
     }
     
     public void setWindowList(List<RgbWindow> windowList) {
         this.windowList = windowList;
-    }*/
+    }
 
     public RgbImageDataChannelBlue getRgbImageDataChannelBlue() {
         return rgbImageDataChannelBlue;

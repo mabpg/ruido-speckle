@@ -6,11 +6,11 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import org.slf4j.LoggerFactory;
 import py.com.mabpg.ruidospeckle.models.RgbImage;
-import static py.com.mabpg.ruidospeckle.models.RgbImage_.noiseProbability;
 import py.com.mabpg.ruidospeckle.utils.RgbImageJpaController;
 
 import py.com.mabpg.ruidospeckle.utils.TestConfig;
 import py.com.mabpg.ruidospeckle.utils.TestConstants;
+import py.com.mabpg.ruidospeckle.utils.WindowMgr;
 
 public class Main {
 
@@ -167,8 +167,8 @@ public class Main {
                     image.setNoiseName(noiseName);
                     image.setNoiseProbability(Double.valueOf(noiseProbability));
                     image.setDescription(Double.valueOf(83));
-                    //WindowMgr windowMgr = new WindowMgr(image, config.WINDOWSLIST);
-                    //windowMgr.setWindowsList();
+                    WindowMgr windowMgr = new WindowMgr(image, config.WINDOWSLIST);
+                    windowMgr.setWindowsList();
                     rgbImageJpaController.create(image);
                     probDesde = probDesde.add(new BigDecimal(config.PROBABILIDAD_RUIDO_STEP));
                 }

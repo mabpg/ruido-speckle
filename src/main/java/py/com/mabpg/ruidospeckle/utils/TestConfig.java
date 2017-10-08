@@ -10,7 +10,7 @@ import py.com.mabpg.ruidospeckle.utils.TestConstants.Ruidos;
  */
 public class TestConfig {
     
-    public List<Integer> WINDOWSLIST = Arrays.asList(1, 5, 7);
+    public List<Integer> WINDOWSLIST = Arrays.asList(1);
     
     public Class[] RUIDOS = {
         //Ruidos.Gaussian.class
