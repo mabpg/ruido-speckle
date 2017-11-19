@@ -37,8 +37,8 @@ public class TestConfig {
         {2, 1, 0}
     };
     
-    public int INDEX_IMAGENES_FROM = 83;
-    public int INDEX_IMAGENES_TO = 83;
+    public int INDEX_IMAGENES_FROM = 7;
+    public int INDEX_IMAGENES_TO = 7;
     
     public String BASE_PATH = "C:/Users/belis/Documents/lastOne/recursos/images";
     public String PATH_ORIGINAL_IMAGE = BASE_PATH + "test";

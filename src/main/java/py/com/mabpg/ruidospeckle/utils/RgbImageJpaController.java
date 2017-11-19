@@ -2,6 +2,7 @@ package py.com.mabpg.ruidospeckle.utils;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import py.com.mabpg.ruidospeckle.models.RgbImage;
 import py.com.mabpg.ruidospeckle.utils.exceptions.PreexistingEntityException;
 
@@ -45,5 +46,21 @@ public class RgbImageJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public List<RgbImage> getImageTest(int minIndex, int maxIndex){
+        EntityManager em = getEntityManager();
+        return (List<RgbImage>)em.createNamedQuery("RgbImage.getImageTest")
+                .setParameter("minIndex", Double.valueOf(minIndex))
+                .setParameter("maxIndex", Double.valueOf(maxIndex))
+                .getResultList();
+    }
+    
+    public List<RgbImage> getNoiseImageByNoise(String noiseName, Double description){
+        EntityManager em = getEntityManager();
+        return (List<RgbImage>)em.createNamedQuery("RgbImage.getNoiseImageByNoise")
+                .setParameter("noiseName", noiseName)
+                .setParameter("description", description)
+                .getResultList();
     }
 }
